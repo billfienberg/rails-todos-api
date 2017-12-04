@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only [:show, :update, :destroy]
+  before_action :set_todo, only: [:show, :update, :destroy]
 
   # GET /todos
   def index
@@ -9,6 +9,7 @@ class TodosController < ApplicationController
 
   # POST /todos
   def create
+    # In our create method in the TodosController, note that we're using create! instead of create. This way, the model will raise an exception ActiveRecord::RecordInvalid. This way, we can avoid deep nested if statements in the controller. Thus, we rescue from this exception in the ExceptionHandler module.
     @todo = Todo.create!(todo_params)
     json_response(@todo, :created)
   end
@@ -38,5 +39,9 @@ class TodosController < ApplicationController
 
     def set_todo
       @todo = Todo.find(params[:id])
+    end
+
+    def set_todo_item
+      @item = @todo.items.find_by!(id: params[:id]) if @todo
     end
 end
