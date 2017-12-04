@@ -31,7 +31,7 @@ RSpec.describe 'Todos API', type: :request do
         end
 
         it 'returns status code 200' do
-          expect(response.to have_http_status(200))
+          expect(response).to have_http_status(200)
         end
       end
 
@@ -57,7 +57,7 @@ RSpec.describe 'Todos API', type: :request do
         before { post '/todos', params: valid_attributes }
 
         it 'creates a todo' do
-          expect(json['title'].to eq('Learn Elm'))
+          expect(json['title']).to eq('Learn Elm')
         end
 
         it 'returns status code 201' do
@@ -86,7 +86,7 @@ RSpec.describe 'Todos API', type: :request do
         before { put "/todos/#{todo_id}", params: valid_attributes }
 
         it 'updates the record' do
-          expet(response.body).to be_empty
+          expect(response.body).to be_empty
         end
 
         it 'returns status code 204' do
